@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * @file
+ * Installs custom sample Asset nodes.
+ */
+
+use Drupal\nodemaker_helper_functions\Helpers\NodemakerHelpers;
+
+/**
+ * Implements hook_install().
+ */
+function nodemaker_sample_assets_install() {
+  $assets = [];
+
+  // Cat Photos!
+  $catsPath = drupal_get_path('module', 'nodemaker_sample_assets') . '/assets/cats';
+  $cats = file_scan_directory($catsPath, '/\.(jpg|png|jpeg)$/');
+  // Dog Photos!
+  $dogsPath = drupal_get_path('module', 'nodemaker_sample_assets') . '/assets/dogs';
+  $dogs = file_scan_directory($dogsPath, '/\.(jpg|png|jpeg)$/');
+
+  $urls = [
+    'http://google.com',
+    'http://drupal.org/u/himerus',
+    'http://amazon.com',
+    'http://github.com/himerus',
+  ];
+
+  $names = [
+    'Joe Schmoe',
+    'John Doe',
+    'Jane Doe',
+    'Lauren Ipsum',
+  ];
+
+  // Combine the results.
+  $files = $cats + $dogs;
+  foreach ($files as $file) {
+    $caption = 'This is a sample caption field using <a href="https://baconipsum.com/?paras=1&type=all-meat&start-with-lorem=1&make-it-spicy=1" target="_blank">Bacon Ipsum</a>. Spicy jalapeno bacon ipsum dolor amet ham hock corned beef beef ribs biltong filet mignon short ribs pancetta alcatra pork belly rump strip steak swine. Swine beef ribs pancetta tongue buffalo. Ground round short loin meatball turkey ham hock, cow pork tongue burgdoggen tri-tip alcatra. Porchetta tri-tip spare ribs, jowl frankfurter picanha jerky alcatra pancetta tenderloin chuck chicken.';
+    $formattedName = ucwords(str_replace('-', ' ', $file->name));
+    $linkUrl = array_rand($urls);
+    $linkText = 'CTA Link Text';
+    $creditLinkUrl = array_rand($urls);
+    $creditName = array_rand($names);
+    $creditLinkText = $names[$creditName] . '\'s website';
+    $heading = 'Heading for ' . $formattedName;
+    $title = 'Sample Asset: ' . $formattedName;
+
+    $assets[] = [
+      'file' => $file,
+      'uri' => $file->uri,
+      'filename' => $file->filename,
+      'savePath' => 'samples/',
+      'title' => $title,
+      'caption' => $caption,
+      'heading' => $heading,
+      'credit' => [
+        'name' => $names[$creditName],
+        'link' => [
+          'url' => $urls[$creditLinkUrl],
+          'text' => $creditLinkText,
+        ],
+      ],
+      'cta' => [
+        'url' => $urls[$linkUrl],
+        'text' => $linkText,
+      ],
+    ];
+  }
+  foreach ($assets as $asset) {
+    NodemakerHelpers::createAsset($asset);
+  }
+}

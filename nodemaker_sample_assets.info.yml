@@ -1,0 +1,7 @@
+name: Sample Assets
+description: 'Provides Asset nodes for dummy content usage.'
+type: module
+core: 8.x
+package: NodeMaker
+dependencies:
+  - 'drupal:nodemaker_asset'

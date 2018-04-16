@@ -1,0 +1,19 @@
+{
+  "name": "himerus/nodemaker_sample_assets",
+  "description": "Sample assets for the NodeMaker suite of modules.",
+  "type": "drupal-module",
+  "homepage": "https://github.com/himerus/nodemaker_sample_assets",
+  "authors": [
+    {
+      "name": "Jake Strawn",
+      "role": "Maintainer",
+      "homepage": "https://github.com/himerus"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/himerus/nodemaker_sample_assets/issues",
+    "source": "https://github.com/himerus/nodemaker_sample_assets"
+  },
+  "license": "GPL-2.0+",
+  "require": { }
+}
